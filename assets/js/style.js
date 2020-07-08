@@ -65,7 +65,8 @@ $(document).ready(function(){
             },
             success: function (data) {
                 $("#item").empty();
-                $("#item").append(data);
+                html =  '<div id="item" class="xv-product-slides grid-view products" data-thumbnail="figure .xv-superimage" data-product=".xv-product-unit"> <div class="row">'
+                $("#item").append(html+data+'</div></div>');
             }
         })
     }
@@ -83,7 +84,8 @@ $(document).ready(function(){
             },
             success:function(data)
             {
-             $('#item').html(data);
+            html =  '<div id="item" class="xv-product-slides grid-view products" data-thumbnail="figure .xv-superimage" data-product=".xv-product-unit"> <div class="row">'                
+             $('#item').html(html+data+'</div></div>');
             },
             error: function(data){
                 console.log("error:" + data);
@@ -92,6 +94,7 @@ $(document).ready(function(){
     }
     $('#search51').keyup(function(){
         var search = $(this).val();      
+        console.log(search)          
         if(search != '')
         {                   
             load_data(search, category_id);
@@ -102,10 +105,34 @@ $(document).ready(function(){
         }
     });
 
+
+
+    $("#btn_send_comment").click(function(){
+        var comment = $("#comment_value").val();
+        var product_id_comment = $("#product_id_comment").val();
+
+        if(comment){
+            $.ajax({
+                url: "action.php",
+                method: "POST",
+                data: {
+                    comment : comment,
+                    product : product_id_comment
+                },
+                success: function (data) {
+                    // $("#all_comment").empty();
+                    $("#all_comment").append(data);
+                    // console.log(data);
+                }
+            })
+        }
+        
+    })
+
+
     $("#load_more").click(function(){
         
         var no_item = document.getElementById("number_item").value;
-        
         $.ajax({
             url:"action.php",
             method:"POST",
@@ -126,9 +153,5 @@ $(document).ready(function(){
         });
 
     })
-
-
-
-
 
 });
