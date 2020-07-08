@@ -1,5 +1,4 @@
 
-<!-- Product side -->
 <div class="col-md-9">
     <div  class="xv-product-slides grid-view products" data-thumbnail="figure .xv-superimage" data-product=".xv-product-unit">
         <div class="row" id="item">

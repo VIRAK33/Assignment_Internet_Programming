@@ -9,7 +9,8 @@
                     <span>
                         <i class="icon-question-circle"></i>
                     </span> Need help
-                    <div class="btn btn-primary">Join</div>
+                    
+                    <!-- <div class="btn btn-primary">Join</div> -->
                 </h2>
             </div>
         </div>
