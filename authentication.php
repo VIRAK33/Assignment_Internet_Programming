@@ -10,19 +10,18 @@ if(isset($_POST['action'])){
         $user = run_query("SELECT * from users where email ='{$email}';");
         $user = mysqli_fetch_assoc($user); 
     
-        if ($email != $user['email']) {
-            echo '404';
-            //Doesn't have and this email
-        } else {
-            if($user['password']!=md5($password)){
-                //Icorrect password
-                echo '405'; 
-            }else{
+        if ($email == $user['email']) {
+            if($user['password'] == (md5($password))){
+                $_SESSION['username'] = $user['name'];
                 //Login success
-                $_SESSION['login'] = $user['name'];
-                echo "200";
+                echo '200';
+            }else{
+                //Icorrect password
+                echo '405';
             }
-            
+        } else {
+            echo '404';
+            //Doesn't have and this email 
         }
     }
     //Signup Action
@@ -55,7 +54,7 @@ if(isset($_POST['action'])){
             $i = run_query($user);
             
             if($i > 0){
-                $_SESSION['login'] = $name;
+                $_SESSION['username'] = $name;
                 echo "Create successfully";
             }else{
                 echo "Failed to create!";
@@ -64,6 +63,10 @@ if(isset($_POST['action'])){
             //Exist email
             echo "404";
         }     
+    }
+    if($_POST['action'] == 'logout'){
+        session_destroy();
+        echo 'logout';
     }
     
 }

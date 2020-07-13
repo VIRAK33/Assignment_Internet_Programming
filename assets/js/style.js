@@ -154,4 +154,20 @@ $(document).ready(function(){
 
     })
 
+    $("#logout").click(function(){
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                action:'logout'
+            },
+            url: 'authentication.php',
+            success: function (data) {
+                document.location.href = 'index.php';
+            }
+        })
+    })
+
+
+
 });

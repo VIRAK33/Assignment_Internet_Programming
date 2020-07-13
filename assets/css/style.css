@@ -103,3 +103,35 @@ button.active{
     color: white;
     padding: 5px 10px;
     }
+
+    .dropdown-menu .show{
+        width: 100px;;
+    }
+
+    /* Cart Box */
+
+    .cart-box{
+        width: 150px;
+        height: 75px;
+        background: #28a745;
+        border-radius: 10px;
+        color: aliceblue;
+        font-size:20px;
+        padding-top: 7px;
+        position: fixed;
+        top:300px;
+        right: 0;
+        z-index:100
+        
+    }
+    .icon-cart-box{
+        color: aliceblue;
+        font-size: 20px;
+    }
+    .box-price{
+        background-color: white;
+        border-radius: 10px;
+        width: 100px;
+        color:black;
+        margin: 0 auto;
+    }

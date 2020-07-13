@@ -3,6 +3,14 @@
     <div  class="xv-product-slides grid-view products" data-thumbnail="figure .xv-superimage" data-product=".xv-product-unit">
         <div class="row" id="item">
             <?php
+
+                if(!isset($_SESSION['cart'])){
+                    $_SESSION['cart'] = array();
+                    
+                    
+
+                }
+
                 
                 // $product = 'select * from products where category_id  = 1';
                 $product = 'select pro.*, ass.resource_path from products as pro join assets as ass on pro.id = ass.product_id where pro.category_id = 1 limit 3;';
@@ -42,9 +50,45 @@
                                 </ul>
                                 <!--ul-->
                                 <div class="xv-rating stars-5"></div>
-                                <span class="xv-price">'.$item["price"].'</span>
-                                <a data-qv-tab="#qvt-cart" href="#" class="product-buy flytoQuickView"><i
-                                        class="icon icon-shopping-basket" aria-hidden="true"></i></a>
+                                <span class="xv-price">'.$item["price"].'</span>';
+                                echo '
+                                    <input type="hidden" name="hidden_name" id="name'.$item["id"].'" value="'.$item["name"].'">
+                                    <input type="hidden" name="hidden_price" id="price'.$item["id"].'" value="'.$item["price"].'">
+                                ';
+                                $status = '';
+                                if(isset($_SESSION['username'])){
+                                    $count = count($_SESSION['cart']);
+                                    
+                                    if($count > 0){
+                                        $count = count($_SESSION['cart']);
+                                        // for($i=0; $i< $count; $i++){
+                                        $isHave = false;
+                                        foreach($_SESSION["cart"] as $keys => $values):
+                                            if($item['id'] != $status){
+                                                
+                                                if($item["id"] == $values["product_id"]){
+                                                    echo ' <a href="checkout.php" style="cursor: pointer;" class="product-buy" id="'.$item["id"].'"  ><i class="icon icon-shopping-basket"></i>&nbsp;Checkout</a>';
+                                                    $status = $item['id'];
+                                                    $isHave = true;
+                                                break;
+                                                }
+                                        
+                                            }
+                                        endforeach;
+                                        if(!$isHave){
+                                            echo ' <a style="cursor: pointer;" class="product-buy" id="'.$item["id"].'" onclick="addCart(this.id)" ><i class="icon icon-shopping-basket"></i>&nbsp;Cart</a>';
+                                        }
+                                        // }
+                                        
+                                    }else{
+                                        echo ' <a style="cursor: pointer;" class="product-buy" id="'.$item["id"].'" onclick="addCart(this.id)" ><i class="icon icon-shopping-basket"></i>&nbsp;Cart</a>';
+                                    }
+
+                                }else{
+                                    echo ' <a href="signin.php" style="cursor: pointer;" class="product-buy"  ><i class="icon icon-shopping-basket"></i>&nbsp;Cart</a>';
+                                }
+
+                            echo' 
                             </div>
                             <!--xv-product-content-->
                         </div>
@@ -54,6 +98,37 @@
                 endforeach;
                 
             ?>
+            <!-- <script>
+                function addCart(click_id){
+                    var item = document.getElementById(click_id)
+                    var product_name = $('#name'+click_id+'').val();
+                    var product_price = $('#price'+click_id+'').val();
+                    alert(product_name+product_price);
+                    item.innerHTML = "Checkout";
+                    // item .setAttribute("href", "checkout.php");
+                    item.innerHTML = '<a href="checkout.php" style="hover:white;">Checkout</a>';
+                    $.ajax({
+                        type: 'POST',
+                        data: {
+                            action:'addToCart',
+                            product_id:click_id,
+                            product_name:product_name,
+                            product_price:product_price
+                        },
+                        url: 'action.php',
+                        error: function(error) {
+                            console.log(error)
+                        },
+                        success: function (data) {
+                            // console.log(data);
+                            $("#cart-checkout").empty();
+                            $("#cart-checkout").append(data);
+                            
+                        }
+                    })
+                }
+
+            </script> -->
 
         </div>
         <div class="col-md-12 offset-5">

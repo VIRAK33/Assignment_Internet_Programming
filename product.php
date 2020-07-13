@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
     include 'connection/config.php';
+
+    session_start();
+    if($_SESSION['username'] ==''){
+        header("Location: signin.php");
+    }
 ?>
 <html lang="en" >
 

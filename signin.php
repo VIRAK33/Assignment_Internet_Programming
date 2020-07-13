@@ -1,3 +1,8 @@
+<?php
+// echo md5('12345');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
